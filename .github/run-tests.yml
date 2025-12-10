@@ -1,0 +1,27 @@
+name: Playwright 自动化测试
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "要运行测试的 URL"
+        required: true
+        default: https://my-site.com
+  repository_dispatch:
+    types: ["run-my-tests", "run-my-tests-2"]
+jobs:
+  run_automation_tests:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    env:
+      ENVIRONMENT: ${{ github.event.inputs.environment }}${{ github.event.client_payload.github.event.inputs.environment }}
+    steps:
+      - name: 运行 Playwright 测试
+        run: |
+          echo "环境: $ENVIRONMENT"
+          echo "GitHub 事件是: ${{ github.event_name }}"
+          echo "在这里运行测试"
+          echo "Action 中的以下步骤提供了你可以在脚本中使用的内容"
+      - name: 输出 GitHub 上下文
+        id: github_context_step
+        # 以下内容会打印出所有可用于任何报告或从其他代码库运行测试的信息
+        run: echo '${{ toJSON(github) }}'
