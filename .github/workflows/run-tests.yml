@@ -12,7 +12,7 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     env:
-      ENVIRONMENT: ${{ github.event.inputs.environment }}${{ github.event.client_payload.github.event.inputs.environment }}
+      ENVIRONMENT: ${{ github.event.client_payload.client_payload }}
     steps:
       - name: ${{github.event.inputs.id}}
         run: echo run identifier ${{ inputs.id }}
