@@ -12,13 +12,13 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     env:
-      ENVIRONMENT: ${{ github.event.client_payload.id }}
+      TARGET_REPO_FULL_NAME: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name || github.event.client_payload.repo }}
     steps:
       - name: ${{github.event.inputs.id}}
         run: echo run identifier ${{ inputs.id }}
       - name: 运行 Playwright 测试
         run: |
-          echo "环境: $ENVIRONMENT"
+          echo "环境: $TARGET_REPO_FULL_NAME"
           echo "GitHub 事件是: ${{ github.event_name }}"
           echo "在这里运行测试"
           echo "Action 中的以下步骤提供了你可以在脚本中使用的内容"
