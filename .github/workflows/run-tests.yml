@@ -14,8 +14,13 @@ jobs:
     env:
       TARGET_REPO_FULL_NAME: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name || github.event.client_payload.repo }}
     steps:
-      - name: ${{github.event.inputs.id}}
-        run: echo run identifier ${{ inputs.id }}
+      - name: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.id }}
+        run: |
+          if [ "${{ github.event_name }}" = 'repository_dispatch' ]; then
+            echo "run identifier ${{ github.event.client_payload.id }}"
+          else
+            echo "run identifier pull_request"
+          fi
       - name: 运行 Playwright 测试
         run: |
           echo "环境: $TARGET_REPO_FULL_NAME"
