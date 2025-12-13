@@ -6,7 +6,7 @@ on:
         description: 'run identifier'
         required: false
   repository_dispatch:
-    types: ["run-my-tests", "run-my-tests-2"]
+    types: ["dispatch-from-llvm", "run-my-tests-2"]
 jobs:
   run_automation_tests:
     timeout-minutes: 60
