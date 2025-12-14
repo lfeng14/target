@@ -21,6 +21,8 @@ jobs:
           else
             echo "run identifier pull_request"
           fi
+          echo ${{ github.event_name == 'pull_request_target' && contains(github.event.pull_request.labels.*.name, 'AArch64') || github.event_name == 'repository_dispatch' && github.event.client_payload.linux_aarch64 }}
+          echo ${{ github.event_name == 'pull_request_target' && contains(github.event.pull_request.labels.*.name, 'AArch64') || github.event_name == 'repository_dispatch' && github.event.client_payload.linux_riscv64 }}
       - name: 运行 Playwright 测试
         run: |
           echo "环境: $TARGET_REPO_FULL_NAME"
@@ -33,5 +35,5 @@ jobs:
         run: echo '${{ toJSON(github) }}'
     outputs:
       linux-x64: true # We always run test on x86
-      linux-aarch64: ${{ github.event_name == 'pull_request_target' && contains(github.event.pull_request.labels.*.name, 'AArch64') || github.event_name == 'repository_dispatch' && contains(github.event.client_payload.pull_request_labels, 'AArch64') }}
-      linux-riscv64: ${{ github.event_name == 'pull_request_target' && contains(github.event.pull_request.labels.*.name, 'RISC-V') || github.event_name == 'repository_dispatch' && contains(github.event.client_payload.pull_request_labels, 'RISC-V') }}
+      linux-aarch64: ${{ github.event_name == 'pull_request_target' && contains(github.event.pull_request.labels.*.name, 'AArch64') || github.event_name == 'repository_dispatch' && github.event.client_payload.linux_aarch64 }}
+      linux-riscv64: ${{ github.event_name == 'pull_request_target' && contains(github.event.pull_request.labels.*.name, 'RISC-V') || github.event_name == 'repository_dispatch' && github.event.client_payload.linux_riscv64 }}
