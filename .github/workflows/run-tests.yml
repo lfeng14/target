@@ -31,3 +31,7 @@ jobs:
         id: github_context_step
         # 以下内容会打印出所有可用于任何报告或从其他代码库运行测试的信息
         run: echo '${{ toJSON(github) }}'
+    outputs:
+      linux-x64: true # We always run test on x86
+      linux-aarch64: ${{ github.event_name == 'pull_request_target' && contains(github.event.pull_request.labels.*.name, 'AArch64') || github.event_name == 'repository_dispatch' && contains(github.event.client_payload.pull_request_labels, 'AArch64') }}
+      linux-riscv64: ${{ github.event_name == 'pull_request_target' && contains(github.event.pull_request.labels.*.name, 'RISC-V') || github.event_name == 'repository_dispatch' && contains(github.event.client_payload.pull_request_labels, 'RISC-V') }}
