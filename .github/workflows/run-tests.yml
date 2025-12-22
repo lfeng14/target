@@ -21,7 +21,7 @@ jobs:
           else
             echo "run identifier pull_request"
           fi
-          echo ${{ (github.event_name == 'pull_request_target' && contains(github.event.pull_request.labels.*.name, 'AArch64')) || (github.event_name == 'repository_dispatch' && contains(github.event.client_payload.labels, 'AArch64') }}
+          echo ${{ (github.event_name == 'pull_request_target' && contains(github.event.pull_request.labels.*.name, 'AArch64')) || (github.event_name == 'repository_dispatch' && contains(github.event.client_payload.labels, 'AArch64')) }}
           echo ${{ (github.event_name == 'pull_request_target' && contains(github.event.pull_request.labels.*.name, 'RISC-V')) || (github.event_name == 'repository_dispatch' && contains(github.event.client_payload.labels, 'RISC-V')) }}
       - name: 运行 Playwright 测试
         run: |
